@@ -3,7 +3,7 @@ OpenSCAD, but in a real language :)
 
 ## Usage
 ```js
-const { modules: m } = require('@smrq/openscad');
+const { modules: m } = require('@smrq/openscad-js');
 
 const model = m.translate([10, 20, 30])(
     m.cube([1, 2, 3], { center: true })
@@ -35,7 +35,7 @@ That's too bad for you.
 Okay, but don't say I didn't warn you.
 
 ```js
-const { globals } = require('@smrq/openscad');
+const { globals } = require('@smrq/openscad-js');
 with (globals) {
     const model = translate([10,20,30])(
         cube([1,2,3], { center: true })
