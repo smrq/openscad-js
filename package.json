@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "OpenSCAD, but in a real programming language",
   "main": "src/index.js",
+  "files": [
+    "README.md",
+    "src"
+  ],
   "repository": "https://github.com/smrq/openscad-js",
   "author": "Greg Smith <smrq@smrq.net>",
   "license": "MIT",
