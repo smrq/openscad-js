@@ -1,6 +1,6 @@
 {
   "name": "@smrq/openscad-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "OpenSCAD, but in a real programming language",
   "main": "src/index.js",
   "files": [
