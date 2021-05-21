@@ -5,10 +5,6 @@ class ScadNode {
 		this.type = type;
 		this.props = props;
 	}
-
-	toString() {
-		return writeNode(0, this);
-	}
 }
 
 function writeNode(depth, node) {
@@ -62,20 +58,22 @@ function writeModifier(depth, symbol, child) {
 	return symbol + writeNode(depth, child);
 }
 
+function compile(node) {
+	return writeNode(0, node);
+}
+
 function defineModule(name) {
 	return (...args) => {
 		const result = function scadModule(...children) {
-			return new ScadNode('module', { name, args, children });
+			return { type: 'module', props: { name, args, children }};
 		};
-		Object.setPrototypeOf(result, ScadNode);
-		result.type = 'object';
-		result.props = { name, args };
+		Object.assign(result, { type: 'object', props: { name, args }});
 		return result;
 	};
 }
 
 function defineModifier(symbol) {
-	return (child) => new ScadNode('modifier', { symbol, child });
+	return (child) => ({ type: 'modifier', props: { symbol, child }});
 }
 
 const modules = new Proxy({
@@ -87,21 +85,27 @@ const modules = new Proxy({
 	get: (obj, prop) => prop in obj ? obj[prop] : defineModule(prop)
 });
 
-const globals = new Proxy({}, {
-	get(_, prop) {
-		if (prop === Symbol.unscopables) {
-			return;
-		}
-		try {
-			return eval(prop);
-		} catch (e) {
+function globals(tryLookup) {
+	return new Proxy({}, {
+		get(_, prop) {
 			return modules[prop];
+		},
+		has(_, prop) {
+			if (!/^(?:[$_\p{ID_Start}])(?:[$_\u200C\u200D\p{ID_Continue}])*$/u.test(prop)) {
+				return false;
+			}
+			try {
+				tryLookup(prop);
+				return false;
+			} catch (e) {
+				return true;
+			}
 		}
-	},
-	has() { return true; }
-});
+	});
+}
 
 module.exports = {
+	compile,
 	modules,
 	globals,
 };

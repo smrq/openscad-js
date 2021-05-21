@@ -1,7 +1,14 @@
-const { globals, modules: m } = require('..');
+const { compile, modules: m } = require('..');
 
-test('basic output', () => {
-	const result = String(
+test('basic output 1', () => {
+	const result = compile(
+		m.cube(1)
+	);
+	expect(result).toBe('cube(1);');
+});
+
+test('basic output 2', () => {
+	const result = compile(
 		m.union()(
 			m.cube(1),
 			m.cube([1,2,3], { center: true }),
@@ -16,7 +23,7 @@ union() {
 });
 
 test('modifiers', () => {
-	const result = String(
+	const result = compile(
 		m.union()(
 			m._debug(m.cube(1)),
 			m._bg(m.cube(2)),
