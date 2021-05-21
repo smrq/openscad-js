@@ -41,7 +41,7 @@ function writeValue(value, isArg = false) {
 		return String(value);
 	}
 	if (typeof value === 'string') {
-		return '"' + string.replace(/"/g, '\"') + '"';
+		return '"' + value.replace(/"/g, '\"') + '"';
 	}
 	if (Array.isArray(value)) {
 		return '[' + value.map(v => writeValue(v)).join(', ') + ']';
