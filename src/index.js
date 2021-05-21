@@ -51,7 +51,7 @@ function writeValue(value, isArg = false) {
 			.map(([k, v]) => k + '=' + writeValue(v))
 			.join(', ');
 	}
-	throw new Error('unexpected value ' + arg);
+	throw new Error('unexpected value ' + value);
 }
 
 function writeModifier(depth, symbol, child) {
