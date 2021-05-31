@@ -33,7 +33,16 @@ function writeObject(depth, name, args) {
 }
 
 function writeArgs(args) {
-	return args.map(arg => writeValue(arg, true)).join(', ');
+	return args
+		.filter(arg =>
+			typeof arg === 'number' ||
+			typeof arg === 'boolean' ||
+			typeof arg === 'string' ||
+			Array.isArray(arg) ||
+			Object.entries(arg).length > 0
+		)
+		.map(arg => writeValue(arg, true))
+		.join(', ');
 }
 
 function writeValue(value, isArg = false) {

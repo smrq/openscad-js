@@ -10,7 +10,7 @@ test('basic output 1', () => {
 test('basic output 2', () => {
 	const result = compile(
 		m.union()(
-			m.cube(1),
+			m.cube(1, {}),
 			m.cube([1,2,3], { center: true }),
 		)
 	);
