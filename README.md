@@ -35,7 +35,7 @@ That's too bad for you.
 Okay, but don't say I didn't warn you.
 
 ```js
-const { compile, globals } = require('@smrq/openscad');
+const { compile, globals } = require('@smrq/openscad-js');
 with (globals(x => eval(x))) {
 
   const model = translate([10, 20, 30])(
